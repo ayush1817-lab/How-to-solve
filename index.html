@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!--
+    HowToSolve Landing Page (Single-file, production-ready)
+    - All CSS + JS embedded
+    - Google Fonts only external dependency
+    - Replace placeholder images with your own (comments below)
+  -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="HowToSolve helps dental clinics in Ireland automate patient onboarding and reactivation to reduce no-shows, bring back dormant patients, and save staff time." />
+
+  <title>HowToSolve — Patient Onboarding & Reactivation Automation for Dental Clinics in Ireland</title>
+
+  <!-- Social preview (optional) -->
+  <meta property="og:title" content="HowToSolve — Keep your patients coming back" />
+  <meta property="og:description" content="Automation systems for Irish dental clinics: onboarding, reactivation, fewer no-shows, more rebookings, less admin." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://howtosolve.online" />
+
+  <!-- Fonts: elegant serif for headings + clean sans for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Palette (warm, premium, not corporate) */
+      --bg: #FBF6EE;              /* warm off-white / cream */
+      --bg2:#F7EFE3;
+      --card:#FFFFFF;
+      --text:#17212B;
+      --muted:#5A6A78;
+
+      --primary:#1F3347;          /* deep slate/blue */
+      --primary2:#2D4864;
+
+      --accent:#D36B4D;           /* terracotta/coral */
+      --accent2:#E07E4F;
+
+      --line: rgba(31,51,71,.14);
+      --shadow: 0 14px 40px rgba(23,33,43,.10);
+      --shadowSoft: 0 10px 26px rgba(23,33,43,.08);
+      --radius: 18px;
+
+      --max: 1120px;
+      --pad: clamp(18px, 3vw, 28px);
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:"DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 15% -10%, rgba(211,107,77,.10), transparent 60%),
+                  radial-gradient(900px 500px at 95% 10%, rgba(31,51,71,.10), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; height:auto; display:block; }
+
+    /* Subtle background shapes */
+    .bg-shape{
+      position:absolute;
+      inset:auto;
+      pointer-events:none;
+      filter: blur(0px);
+      opacity:.55;
+      z-index:0;
+    }
+    .shape-1{
+      width:520px; height:520px;
+      top:-220px; left:-220px;
+      background: radial-gradient(circle at 30% 30%, rgba(211,107,77,.24), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(31,51,71,.14), transparent 62%);
+      border-radius: 50%;
+    }
+    .shape-2{
+      width:540px; height:420px;
+      top:120px; right:-240px;
+      background: radial-gradient(circle at 30% 30%, rgba(31,51,71,.18), transparent 58%),
+                  radial-gradient(circle at 70% 60%, rgba(211,107,77,.18), transparent 62%);
+      border-radius: 45% 55% 55% 45% / 55% 45% 55% 45%;
+      transform: rotate(8deg);
+    }
+
+    /* Layout helpers */
+    .container{
+      width:min(var(--max), calc(100% - 2*var(--pad)));
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+    .section{
+      padding: clamp(56px, 7vw, 92px) 0;
+      position:relative;
+    }
+    .section-title{
+      font-family:"Playfair Display", Georgia, serif;
+      letter-spacing:-.02em;
+      font-size: clamp(30px, 4.2vw, 44px);
+      line-height:1.1;
+      margin:0 0 14px;
+    }
+    .section-lead{
+      color:var(--muted);
+      font-size: clamp(16px, 2vw, 18px);
+      max-width: 62ch;
+      margin:0;
+    }
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      color:var(--primary);
+      font-weight:600;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .kicker::before{
+      content:"";
+      width:10px; height:10px;
+      border-radius:99px;
+      background: linear-gradient(135deg, var(--accent), rgba(211,107,77,.45));
+      box-shadow: 0 6px 18px rgba(211,107,77,.28);
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border-radius:999px;
+      padding: 12px 18px;
+      font-weight:700;
+      border:1px solid transparent;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+      will-change: transform;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn-primary{
+      background: var(--primary);
+      color:#fff;
+      box-shadow: 0 12px 26px rgba(31,51,71,.18);
+    }
+    .btn-primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(31,51,71,.22);
+      background: linear-gradient(180deg, var(--primary), var(--primary2));
+    }
+    .btn-secondary{
+      background: rgba(255,255,255,.45);
+      border-color: rgba(31,51,71,.18);
+      color: var(--primary);
+      backdrop-filter: blur(8px);
+    }
+    .btn-secondary:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadowSoft);
+      border-color: rgba(31,51,71,.26);
+      background: rgba(255,255,255,.72);
+    }
+    .btn-accent{
+      background: linear-gradient(180deg, var(--accent2), var(--accent));
+      color:#fff;
+      box-shadow: 0 12px 26px rgba(211,107,77,.22);
+    }
+    .btn-accent:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(211,107,77,.26);
+    }
+
+    /* Nav */
+    .nav{
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:50;
+      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+    }
+    .nav-inner{
+      width:min(var(--max), calc(100% - 2*var(--pad)));
+      margin:0 auto;
+      padding: 14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:-.02em;
+      color:var(--primary);
+    }
+    .mark{
+      width:34px; height:34px;
+      border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 55%),
+        linear-gradient(135deg, var(--primary), var(--primary2));
+      box-shadow: 0 12px 22px rgba(31,51,71,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .mark::after{
+      content:"";
+      position:absolute;
+      inset:-40% -40%;
+      background: radial-gradient(circle at 30% 40%, rgba(211,107,77,.45), transparent 55%);
+      transform: rotate(10deg);
+      opacity:.8;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      color: rgba(23,33,43,.84);
+      font-weight:600;
+      font-size:14px;
+    }
+    .nav-links a{
+      padding:8px 10px;
+      border-radius:999px;
+      transition: background .18s ease, color .18s ease;
+    }
+    .nav-links a:hover{
+      background: rgba(31,51,71,.06);
+      color: var(--primary);
+    }
+    .nav-cta{ display:flex; align-items:center; gap:10px; }
+
+    .nav.scrolled{
+      background: rgba(251,246,238,.72);
+      backdrop-filter: blur(10px);
+      border-color: rgba(31,51,71,.10);
+      box-shadow: 0 10px 30px rgba(23,33,43,.06);
+    }
+
+    /* Hero */
+    .hero{
+      padding-top: 98px;
+      padding-bottom: 24px;
+      position:relative;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .95fr;
+      gap: clamp(22px, 5vw, 56px);
+      align-items:center;
+    }
+    .headline{
+      font-family:"Playfair Display", Georgia, serif;
+      font-size: clamp(40px, 5.6vw, 62px);
+      line-height:1.02;
+      letter-spacing:-.03em;
+      margin: 14px 0 12px;
+    }
+    .headline em{
+      font-style: italic;
+      color: var(--accent);
+    }
+    .subhead{
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 19px);
+      max-width: 60ch;
+      margin: 0 0 22px;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin-top: 8px;
+    }
+    .hero-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      margin-top: 18px;
+      color: rgba(23,33,43,.78);
+      font-size: 14px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius:999px;
+      border: 1px solid rgba(31,51,71,.14);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:99px;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(211,107,77,.25);
+    }
+
+    .hero-visual{
+      position:relative;
+      border-radius: 26px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(31,51,71,.12);
+      background: #fff;
+      min-height: 420px;
+    }
+    .hero-visual img{
+      width:100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+    .stats-card{
+      position:absolute;
+      left: 18px;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(251,246,238,.86);
+      border: 1px solid rgba(31,51,71,.14);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 14px 14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      box-shadow: 0 10px 26px rgba(23,33,43,.10);
+    }
+    .stat{
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(31,51,71,.10);
+    }
+    .stat strong{
+      display:block;
+      font-size: 18px;
+      color: var(--primary);
+      letter-spacing:-.02em;
+    }
+    .stat span{
+      display:block;
+      color: rgba(23,33,43,.70);
+      font-size: 12.5px;
+      margin-top: 2px;
+    }
+
+    /* Social proof strip */
+    .proof{
+      padding: 22px 0 0;
+    }
+    .proof-bar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border: 1px solid rgba(31,51,71,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      padding: 14px 16px;
+      box-shadow: 0 10px 22px rgba(23,33,43,.06);
+    }
+    .proof-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+    .mini-avatars{
+      display:flex;
+      align-items:center;
+    }
+    .mini-avatars span{
+      width:34px; height:34px;
+      border-radius: 999px;
+      border: 2px solid rgba(251,246,238,.92);
+      background: linear-gradient(135deg, rgba(31,51,71,.22), rgba(211,107,77,.22));
+      box-shadow: 0 10px 18px rgba(23,33,43,.06);
+      margin-left: -10px;
+    }
+    .proof-copy{
+      font-weight:700;
+      color: var(--primary);
+      line-height:1.2;
+    }
+    .proof-copy small{
+      display:block;
+      font-weight:600;
+      color: rgba(23,33,43,.72);
+      margin-top: 2px;
+    }
+    .proof-metrics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+    .metric{
+      border-radius: 999px;
+      padding: 10px 12px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.6);
+      color: rgba(23,33,43,.78);
+      font-weight:700;
+      font-size: 13px;
+    }
+    .metric b{ color: var(--primary); }
+
+    /* Cards grid */
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      align-items:stretch;
+    }
+    .card{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(31,51,71,.12);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+      box-shadow: 0 10px 26px rgba(23,33,43,.06);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadowSoft);
+      border-color: rgba(31,51,71,.18);
+      background: rgba(255,255,255,.86);
+    }
+    .card h3{
+      margin: 10px 0 8px;
+      font-size: 18px;
+      letter-spacing:-.01em;
+      color: var(--primary);
+    }
+    .card p{
+      margin: 0;
+      color: rgba(23,33,43,.72);
+      font-size: 15px;
+    }
+    .card .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius:999px;
+      border: 1px solid rgba(211,107,77,.20);
+      background: rgba(211,107,77,.08);
+      color: var(--primary);
+      font-weight:700;
+      font-size: 12px;
+    }
+    .card .tag::before{
+      content:"";
+      width:8px; height:8px;
+      border-radius:999px;
+      background: var(--accent);
+    }
+
+    /* Lists */
+    .checklist{
+      margin: 12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .checklist li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: rgba(23,33,43,.74);
+      font-size: 14.5px;
+    }
+    .check{
+      flex:0 0 auto;
+      width:20px; height:20px;
+      border-radius: 8px;
+      border: 1px solid rgba(31,51,71,.14);
+      background: rgba(255,255,255,.7);
+      display:grid;
+      place-items:center;
+      margin-top: 2px;
+      box-shadow: 0 10px 18px rgba(23,33,43,.06);
+    }
+    .check svg{ width:14px; height:14px; }
+    .check path{ stroke: var(--accent); }
+
+    /* Split section (about / solution image) */
+    .split{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(18px, 5vw, 52px);
+      align-items:center;
+      margin-top: 28px;
+    }
+    .photo{
+      border-radius: 26px;
+      overflow:hidden;
+      border: 1px solid rgba(31,51,71,.12);
+      box-shadow: var(--shadowSoft);
+      background: #fff;
+      position:relative;
+      min-height: 380px;
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+    }
+    .photo::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(31,51,71,.00), rgba(31,51,71,.06));
+      pointer-events:none;
+    }
+
+    /* How it works */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .step{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 10px 26px rgba(23,33,43,.06);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .step:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadowSoft);
+      border-color: rgba(31,51,71,.18);
+    }
+    .step-num{
+      width:38px; height:38px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(211,107,77,.22), rgba(211,107,77,.10));
+      border: 1px solid rgba(211,107,77,.24);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color: var(--primary);
+      box-shadow: 0 12px 22px rgba(211,107,77,.12);
+    }
+    .step h3{ margin: 12px 0 8px; color: var(--primary); }
+    .step p{ margin:0; color: rgba(23,33,43,.72); font-size: 14.5px; }
+
+    /* Testimonials */
+    .testimonials{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .quote{
+      position:relative;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 10px 26px rgba(23,33,43,.06);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .quote:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadowSoft);
+      border-color: rgba(31,51,71,.18);
+    }
+    .quote p{
+      margin: 10px 0 14px;
+      color: rgba(23,33,43,.76);
+      font-size: 14.5px;
+    }
+    .quote .who{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-top: 10px;
+    }
+    .avatar{
+      width:42px; height:42px;
+      border-radius: 999px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color: var(--primary);
+      background: linear-gradient(135deg, rgba(31,51,71,.18), rgba(211,107,77,.18));
+      border: 1px solid rgba(31,51,71,.12);
+      box-shadow: 0 10px 18px rgba(23,33,43,.06);
+    }
+    .who b{
+      display:block;
+      color: var(--primary);
+      font-size: 14px;
+      line-height:1.2;
+    }
+    .who span{
+      display:block;
+      color: rgba(23,33,43,.66);
+      font-size: 12.5px;
+      margin-top: 2px;
+    }
+
+    /* Pricing */
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      align-items:stretch;
+    }
+    .price-card{
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 10px 26px rgba(23,33,43,.06);
+      position:relative;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      overflow:hidden;
+    }
+    .price-card:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadowSoft);
+      border-color: rgba(31,51,71,.18);
+      background: rgba(255,255,255,.9);
+    }
+    .price-card.popular{
+      border-color: rgba(211,107,77,.38);
+      box-shadow: 0 18px 46px rgba(211,107,77,.12);
+      background:
+        radial-gradient(700px 260px at 50% 0%, rgba(211,107,77,.16), transparent 62%),
+        rgba(255,255,255,.86);
+    }
+    .badge{
+      position:absolute;
+      top:14px; right:14px;
+      background: rgba(211,107,77,.12);
+      border: 1px solid rgba(211,107,77,.32);
+      color: var(--primary);
+      font-weight:800;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius:999px;
+    }
+    .price-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .price-name{
+      font-weight:900;
+      color: var(--primary);
+      font-size: 18px;
+      letter-spacing:-.01em;
+    }
+    .price{
+      font-family:"Playfair Display", Georgia, serif;
+      font-weight:700;
+      letter-spacing:-.02em;
+      font-size: 34px;
+      color: var(--primary);
+      margin: 6px 0 6px;
+    }
+    .price small{
+      font-family:"DM Sans", sans-serif;
+      font-weight:700;
+      font-size: 12px;
+      color: rgba(23,33,43,.60);
+      margin-left: 6px;
+    }
+    .price-desc{
+      margin: 0 0 14px;
+      color: rgba(23,33,43,.72);
+      font-size: 14.5px;
+      max-width: 42ch;
+    }
+
+    /* FAQ */
+    .faq{
+      margin-top: 22px;
+      display:grid;
+      gap: 12px;
+      max-width: 860px;
+    }
+    details{
+      border-radius: 18px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.72);
+      padding: 14px 16px;
+      box-shadow: 0 10px 26px rgba(23,33,43,.06);
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    details:hover{
+      border-color: rgba(31,51,71,.18);
+      background: rgba(255,255,255,.86);
+      transform: translateY(-2px);
+    }
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      color: var(--primary);
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .chev{
+      width:32px; height:32px;
+      border-radius: 12px;
+      border: 1px solid rgba(31,51,71,.12);
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.6);
+      transition: transform .18s ease;
+      flex:0 0 auto;
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+    details p{
+      margin: 10px 0 0;
+      color: rgba(23,33,43,.74);
+      font-size: 14.5px;
+      max-width: 80ch;
+    }
+
+    /* Final CTA */
+    .cta{
+      border-radius: 26px;
+      border: 1px solid rgba(31,51,71,.12);
+      background:
+        radial-gradient(700px 260px at 15% 0%, rgba(211,107,77,.18), transparent 60%),
+        radial-gradient(700px 260px at 90% 20%, rgba(31,51,71,.16), transparent 62%),
+        rgba(255,255,255,.68);
+      backdrop-filter: blur(8px);
+      padding: clamp(20px, 4vw, 34px);
+      box-shadow: var(--shadowSoft);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 18px;
+      flex-wrap:wrap;
+    }
+    .cta h2{
+      font-family:"Playfair Display", Georgia, serif;
+      font-size: clamp(28px, 3.6vw, 40px);
+      margin:0;
+      line-height:1.1;
+      color: var(--primary);
+      letter-spacing:-.02em;
+    }
+    .cta p{
+      margin: 8px 0 0;
+      color: rgba(23,33,43,.72);
+      max-width: 60ch;
+      font-size: 15.5px;
+    }
+    .cta small{
+      display:block;
+      margin-top: 10px;
+      color: rgba(23,33,43,.66);
+      font-weight:700;
+    }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 46px;
+      border-top: 1px solid rgba(31,51,71,.10);
+      background: rgba(251,246,238,.6);
+    }
+    .footer-inner{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 18px;
+      flex-wrap:wrap;
+    }
+    .footer-meta{
+      color: rgba(23,33,43,.70);
+      font-size: 14px;
+    }
+    .footer-meta a{
+      color: var(--primary);
+      font-weight:800;
+      border-bottom: 1px solid rgba(31,51,71,.22);
+    }
+    .footer-meta a:hover{
+      border-bottom-color: rgba(211,107,77,.7);
+    }
+
+    /* Scroll animations */
+    .reveal{
+      opacity:0;
+      transform: translateY(16px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.show{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* Hero load-in animation (stagger) */
+    body:not(.loaded) .hero-stagger{
+      opacity:0;
+      transform: translateY(14px);
+    }
+    body.loaded .hero-stagger{
+      opacity:1;
+      transform: translateY(0);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    body.loaded .d1{ transition-delay: .05s; }
+    body.loaded .d2{ transition-delay: .14s; }
+    body.loaded .d3{ transition-delay: .23s; }
+    body.loaded .d4{ transition-delay: .32s; }
+    body.loaded .d5{ transition-delay: .41s; }
+
+    /* Mobile nav */
+    .menu-btn{
+      display:none;
+      border: 1px solid rgba(31,51,71,.14);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight:900;
+      color: var(--primary);
+      box-shadow: 0 10px 18px rgba(23,33,43,.06);
+      cursor:pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .menu-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.78); }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-visual{ min-height: 360px; }
+      .split{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .steps{ grid-template-columns: 1fr; }
+      .testimonials{ grid-template-columns: 1fr; }
+      .pricing{ grid-template-columns: 1fr; }
+      .nav-links{ display:none; }
+      .menu-btn{ display:inline-flex; }
+      .nav.open .nav-links{
+        display:flex;
+        position:absolute;
+        top: 64px;
+        left: var(--pad);
+        right: var(--pad);
+        flex-direction:column;
+        background: rgba(251,246,238,.92);
+        border: 1px solid rgba(31,51,71,.10);
+        border-radius: 18px;
+        padding: 10px;
+        box-shadow: 0 18px 40px rgba(23,33,43,.12);
+        backdrop-filter: blur(10px);
+      }
+      .nav.open .nav-links a{ width:100%; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+      .reveal{ opacity:1 !important; transform:none !important; }
+      body:not(.loaded) .hero-stagger{ opacity:1 !important; transform:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-shape shape-1" aria-hidden="true"></div>
+  <div class="bg-shape shape-2" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="HowToSolve home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>HowToSolve</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#problem">Problems</a>
+        <a href="#solution">Systems</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-cta">
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+        <a class="btn btn-accent" href="#book">Book a call</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="kicker hero-stagger d1">For Dental Clinics in Ireland</div>
+            <h1 class="headline hero-stagger d2">
+              Keep your patients <em>coming back</em>
+            </h1>
+            <p class="subhead hero-stagger d3">
+              I help Irish dental clinics automate patient onboarding and reactivation—so you reduce no-shows,
+              bring back overdue patients, and free your team from constant manual follow-ups.
+            </p>
+
+            <div class="hero-actions hero-stagger d4">
+              <!-- Replace href with your scheduling link (Calendly, etc.) -->
+              <a class="btn btn-primary" href="#book">Book a free call</a>
+              <a class="btn btn-secondary" href="#pricing">View pricing</a>
+            </div>
+
+            <div class="hero-meta hero-stagger d5" role="list">
+              <span class="pill" role="listitem"><span class="dot" aria-hidden="true"></span>30% fewer no-shows</span>
+              <span class="pill" role="listitem"><span class="dot" aria-hidden="true"></span>15–25% reactivated patients</span>
+              <span class="pill" role="listitem"><span class="dot" aria-hidden="true"></span>10+ hours saved weekly</span>
+            </div>
+          </div>
+
+          <div class="hero-visual hero-stagger d3" aria-label="Warm dental clinic reception image">
+            <!--
+              IMAGE (DALL·E 3 / "dalle e"):
+              You asked to use DALL·E. Since this is a single HTML file, you’ll need to host the generated image
+              somewhere (or locally) and update the src below.
+
+              Suggested DALL·E prompt (hero):
+              “A warm, candid photo of a modern dental clinic reception in Ireland, friendly receptionist smiling
+              while greeting a patient, natural soft daylight, welcoming atmosphere, subtle warm tones, not clinical,
+              no medical symbols, premium editorial photography style, 35mm lens look, shallow depth of field.”
+
+              For now, this uses a tasteful Unsplash placeholder (replace when you have your DALL·E image hosted).
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1600&q=80"
+              alt="Warm, welcoming dental clinic reception"
+              loading="eager"
+              fetchpriority="high"
+            />
+
+            <div class="stats-card" aria-label="Key results">
+              <div class="stat">
+                <strong>30%</strong>
+                <span>Reduction in no-shows</span>
+              </div>
+              <div class="stat">
+                <strong>15–25%</strong>
+                <span>Dormant patients reactivated</span>
+              </div>
+              <div class="stat">
+                <strong>10+ hrs</strong>
+                <span>Saved per week</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social proof bar -->
+        <div class="proof">
+          <div class="proof-bar reveal">
+            <div class="proof-left">
+              <div class="mini-avatars" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="proof-copy">
+                Trusted by Irish clinics
+                <small>Automation that feels personal, not robotic.</small>
+              </div>
+            </div>
+
+            <div class="proof-metrics" aria-label="Highlights">
+              <div class="metric"><b>€</b> More rebookings</div>
+              <div class="metric"><b>Less</b> admin load</div>
+              <div class="metric"><b>Better</b> patient experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section" id="problem">
+      <div class="container">
+        <div class="kicker reveal">The problem</div>
+        <h2 class="section-title reveal">Your patient database is leaking revenue</h2>
+        <p class="section-lead reveal">
+          Most clinics don’t have a patient problem—they have a follow-up problem.
+          When communication is inconsistent, patients drift… and your diary suffers.
+        </p>
+
+        <div class="grid-3">
+          <article class="card reveal">
+            <span class="tag">Leak #1</span>
+            <h3>New patients vanish after the first visit</h3>
+            <p>
+              Without a structured welcome + follow-up sequence, patients don’t build momentum.
+              They forget the plan, postpone treatment, and quietly drop off.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <span class="tag">Leak #2</span>
+            <h3>Dormant patients sit forgotten in the database</h3>
+            <p>
+              Patients who haven’t visited in 6+ months often intend to return—but nobody prompts them
+              at the right time with the right message.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <span class="tag">Leak #3</span>
+            <h3>No time for manual follow-ups</h3>
+            <p>
+              Phone calls and ad-hoc texts don’t scale. Your team spends hours chasing,
+              while no-shows and gaps continue.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="section" id="solution">
+      <div class="container">
+        <div class="kicker reveal">The solution</div>
+        <h2 class="section-title reveal">Two systems that work while you sleep</h2>
+        <p class="section-lead reveal">
+          Simple, human messaging—automated end-to-end. Built around how patients actually behave,
+          and designed to fit your clinic’s tone.
+        </p>
+
+        <div class="split">
+          <div class="grid-2" style="margin-top:0;">
+            <article class="card reveal">
+              <span class="tag">System 1 · €997</span>
+              <h3>Patient Onboarding System</h3>
+              <p>Automates the new patient journey from day one.</p>
+              <ul class="checklist">
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Welcome messages + pre-visit information
+                </li>
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Appointment reminders to cut no-shows
+                </li>
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Post-visit follow-up + review requests
+                </li>
+              </ul>
+            </article>
+
+            <article class="card reveal">
+              <span class="tag">System 2 · €997</span>
+              <h3>Patient Reactivation System</h3>
+              <p>Brings back dormant patients who haven’t visited in 6+ months.</p>
+              <ul class="checklist">
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Identify overdue patients automatically
+                </li>
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Personalised outreach + recall reminders
+                </li>
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  Frictionless rebooking prompts
+                </li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="photo reveal" aria-label="Consultant working image">
+            <!--
+              IMAGE (DALL·E 3 / "dalle e"):
+              Suggested DALL·E prompt (about/solution visual):
+              “A warm, natural photo of a friendly consultant working on a laptop in a bright Dublin café or home office,
+              soft daylight, modern but human, premium editorial photography, no corporate stock-photo poses, warm tones.”
+
+              Placeholder below uses Unsplash (replace when you host your generated image).
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
+              alt="Consultant working on a laptop"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- About / Trust -->
+        <div class="section" style="padding-bottom:0;">
+          <div class="container" style="width:100%; margin:0; padding:0;">
+            <div class="split" style="margin-top:0;">
+              <div class="reveal">
+                <div class="kicker">About</div>
+                <h2 class="section-title" style="margin-top:12px;">Built for busy clinics, not software demos</h2>
+                <p class="section-lead">
+                  HowToSolve is a done-for-you implementation: we map your current patient journey, write the messaging,
+                  set up the automation, and help your team run it confidently.
+                </p>
+
+                <div class="grid-3" style="margin-top:18px;">
+                  <div class="card reveal">
+                    <span class="tag">Human tone</span>
+                    <h3>Messages that feel like your clinic</h3>
+                    <p>Warm, clear communication that fits your brand—no stiff templates.</p>
+                  </div>
+                  <div class="card reveal">
+                    <span class="tag">Practical</span>
+                    <h3>Designed to reduce admin</h3>
+                    <p>Fewer manual chases, fewer gaps, more predictable appointment flow.</p>
+                  </div>
+                  <div class="card reveal">
+                    <span class="tag">Results</span>
+                    <h3>Optimised for rebooking</h3>
+                    <p>Simple prompts and timing that encourage patients to take the next step.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="photo reveal" aria-label="Optional headshot placeholder">
+                <!-- If you want a headshot-style placeholder, replace with your own or a DALL·E image -->
+                <img
+                  src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=1600&q=80"
+                  alt="Friendly professional portrait placeholder"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="kicker reveal">Process</div>
+        <h2 class="section-title reveal">How it works</h2>
+        <p class="section-lead reveal">
+          A focused setup process that gets you live quickly—without disrupting your clinic.
+        </p>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">1</div>
+            <h3>Discovery</h3>
+            <p>
+              We review your current patient journey, identify drop-off points, and agree the tone + outcomes.
+            </p>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">2</div>
+            <h3>Build</h3>
+            <p>
+              I write and implement the sequences: onboarding, reminders, follow-ups, and reactivation campaigns.
+            </p>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">3</div>
+            <h3>Launch</h3>
+            <p>
+              We go live, monitor early performance, and make small tweaks to maximise rebookings and reviews.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="kicker reveal">Results</div>
+        <h2 class="section-title reveal">Results from clinics like yours</h2>
+        <p class="section-lead reveal">
+          Testimonials below are placeholders—swap in real clinic feedback when ready.
+        </p>
+
+        <div class="testimonials">
+          <figure class="quote reveal">
+            <div class="tag">Onboarding</div>
+            <p>
+              “We saw fewer last-minute cancellations and our front desk stopped spending mornings chasing confirmations.
+              Patients arrived more prepared, and reviews started coming in consistently.”
+            </p>
+            <figcaption class="who">
+              <div class="avatar" aria-hidden="true">AM</div>
+              <div>
+                <b>Practice Manager</b>
+                <span>Dublin (placeholder)</span>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <div class="tag">Reactivation</div>
+            <p>
+              “The reactivation messages felt natural—not spammy. We rebooked patients we hadn’t seen in months,
+              and the diary looked healthier within weeks.”
+            </p>
+            <figcaption class="who">
+              <div class="avatar" aria-hidden="true">SO</div>
+              <div>
+                <b>Clinic Owner</b>
+                <span>Leinster (placeholder)</span>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="quote reveal">
+            <div class="tag">Complete Package</div>
+            <p>
+              “The biggest win was time. Our team got hours back each week, and patients stayed engaged
+              after their first appointment.”
+            </p>
+            <figcaption class="who">
+              <div class="avatar" aria-hidden="true">KD</div>
+              <div>
+                <b>Practice Manager</b>
+                <span>Ireland (placeholder)</span>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="kicker reveal">Pricing</div>
+        <h2 class="section-title reveal">Simple, fixed pricing</h2>
+        <p class="section-lead reveal">
+          Choose one system or combine both for the best outcome. Prices in Euro (€).
+        </p>
+
+        <div class="pricing">
+          <div class="price-card reveal">
+            <div class="price-head">
+              <div class="price-name">Patient Onboarding</div>
+            </div>
+            <div class="price">€997 <small>one-time</small></div>
+            <p class="price-desc">
+              Automate the full new-patient journey: welcome → reminders → follow-up → reviews.
+            </p>
+            <ul class="checklist">
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Welcome + pre-visit info</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminder sequence</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Post-visit follow-up</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Review prompts</li>
+            </ul>
+            <div style="margin-top:16px;">
+              <a class="btn btn-primary" href="#book">Book a call</a>
+            </div>
+          </div>
+
+          <div class="price-card popular reveal" aria-label="Most popular package">
+            <div class="badge">Most Popular</div>
+            <div class="price-head">
+              <div class="price-name">Complete Package</div>
+            </div>
+            <div class="price">€1,797 <small>one-time</small></div>
+            <p class="price-desc">
+              Both systems together, plus extended support to ensure your clinic sees results.
+            </p>
+            <ul class="checklist">
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Onboarding System included</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reactivation System included</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Extended support window</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Optimisation tweaks after launch</li>
+            </ul>
+            <div style="margin-top:16px;">
+              <a class="btn btn-accent" href="#book">Book a free call</a>
+            </div>
+          </div>
+
+          <div class="price-card reveal">
+            <div class="price-head">
+              <div class="price-name">Patient Reactivation</div>
+            </div>
+            <div class="price">€997 <small>one-time</small></div>
+            <p class="price-desc">
+              Rebook overdue patients with personalised outreach and timely recall reminders.
+            </p>
+            <ul class="checklist">
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Overdue patient identification</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Personalised outreach sequence</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Recall reminders</li>
+              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Easy rebooking prompts</li>
+            </ul>
+            <div style="margin-top:16px;">
+              <a class="btn btn-primary" href="#book">Book a call</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="kicker reveal">FAQ</div>
+        <h2 class="section-title reveal">Common questions</h2>
+        <p class="section-lead reveal">
+          Straight answers, no fluff. If you’re unsure, we’ll cover it on the call.
+        </p>
+
+        <div class="faq">
+          <details class="reveal">
+            <summary>
+              Will this feel spammy to patients?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <p>
+              No—everything is written in a warm, human tone and timed sensibly. The goal is clarity and convenience,
+              not “marketing blasts”. Messages are tailored to your clinic’s voice.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              How quickly can we launch?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <p>
+              Typically, clinics can go live within a short setup window after discovery—depending on how quickly we can
+              confirm messaging, branding, and patient list segmentation.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Do we need to change our software?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <p>
+              Usually not. The systems are designed to work around how clinics already operate.
+              On the call, we’ll confirm what you’re using and what’s needed for a smooth integration.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              What kind of results should we expect?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <p>
+              Outcomes vary, but clinics commonly see fewer no-shows, a steady stream of reactivated patients,
+              and significant admin time saved—especially once the first sequences are live and refined.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Is the call actually free and no obligation?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <p>
+              Yes. It’s a short fit check: what’s happening in your clinic, where patients drop off,
+              and whether one of the systems makes sense.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section" id="book">
+      <div class="container">
+        <div class="cta reveal">
+          <div>
+            <h2>Let’s see if we’re a fit</h2>
+            <p>
+              If you want fewer no-shows, more rebookings, and a calmer front desk,
+              we’ll map the quickest path to results.
+              <small>15-minute call · No obligation</small>
+            </p>
+          </div>
+          <!-- Replace with your booking link -->
+          <a class="btn btn-accent" href="mailto:hello@howtosolve.online?subject=HowToSolve%20-%20Free%20Call%20Request&body=Hi%2C%0A%0AI'd%20like%20to%20book%20a%2015-minute%20call%20to%20discuss%20patient%20onboarding%20and%20reactivation.%0A%0AClinic%20name%3A%0APreferred%20times%3A%0A%0AThanks%2C">
+            Book a free call
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="#top" aria-label="HowToSolve home">
+            <span class="mark" aria-hidden="true"></span>
+            <span>HowToSolve</span>
+          </a>
+          <div class="footer-meta" style="margin-top:10px;">
+            Dublin, Ireland · € Pricing<br />
+            Email: <a href="mailto:hello@howtosolve.online">hello@howtosolve.online</a>
+          </div>
+        </div>
+
+        <div class="footer-meta">
+          © <span id="year"></span> HowToSolve. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Nav: transparent on load, solid on scroll + mobile menu toggle ---
+    (function () {
+      const nav = document.getElementById('siteNav');
+      const menuBtn = document.getElementById('menuBtn');
+      const onScroll = () => {
+        if (window.scrollY > 10) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Mobile menu
+      if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+          const open = nav.classList.toggle('open');
+          menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        // Close menu when clicking a nav link
+        nav.querySelectorAll('.nav-links a').forEach(a => {
+          a.addEventListener('click', () => {
+            nav.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+    })();
+
+    // --- Hero load-in animation ---
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('loaded');
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    // --- Scroll-triggered reveal animations (fade up) ---
+    (function () {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+
+    // --- Optional: smooth-scroll offset for fixed nav (improves anchor accuracy) ---
+    (function () {
+      const nav = document.getElementById('siteNav');
+      const navH = () => nav ? nav.getBoundingClientRect().height : 0;
+
+      function scrollWithOffset(targetId) {
+        const el = document.querySelector(targetId);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - navH() - 10;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          if (!href || href === '#' || href === '#top') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          history.pushState(null, '', href);
+          scrollWithOffset(href);
+        });
+      });
+    })();
+  </script>
+
+  <!--
+    QUICK EDIT NOTES
+    1) Booking CTA:
+       - Replace the mailto link in the Final CTA with your Calendly/booking URL.
+    2) Images:
+       - Replace the <img src="...unsplash..."> URLs with your hosted DALL·E images.
+       - Keep the same aspect ratio for best layout.
+    3) Copy tweaks:
+       - Search for “placeholder” and swap testimonials, proof bar copy, etc.
+  -->
+</body>
+</html>

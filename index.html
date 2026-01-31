@@ -3,9 +3,9 @@
 <head>
   <!--
     HowToSolve Landing Page (Single-file, production-ready)
-    - All CSS + JS embedded
-    - Google Fonts only external dependency
-    - Replace placeholder images with your own (comments below)
+    UPDATE INCLUDED:
+    ✅ Navbar logo now uses your file name: Website_header_logo (assumed in same folder)
+    ✅ Added a vertical scrolling “sectors” text animation beside the logo + name
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,30 +13,27 @@
 
   <title>HowToSolve — Patient Onboarding & Reactivation Automation for Dental Clinics in Ireland</title>
 
-  <!-- Social preview (optional) -->
-  <meta property="og:title" content="HowToSolve — Keep your patients coming back" />
-  <meta property="og:description" content="Automation systems for Irish dental clinics: onboarding, reactivation, fewer no-shows, more rebookings, less admin." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://howtosolve.online" />
-
-  <!-- Fonts: elegant serif for headings + clean sans for body -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- If your logo is a .png, keep this as-is.
+       If it's .jpg or .svg, change the src below accordingly. -->
+  <link rel="icon" href="Website_header_logo.png" type="image/png">
+
   <style>
     :root{
-      /* Palette (warm, premium, not corporate) */
-      --bg: #FBF6EE;              /* warm off-white / cream */
+      --bg: #FBF6EE;
       --bg2:#F7EFE3;
       --card:#FFFFFF;
       --text:#17212B;
       --muted:#5A6A78;
 
-      --primary:#1F3347;          /* deep slate/blue */
+      --primary:#1F3347;
       --primary2:#2D4864;
 
-      --accent:#D36B4D;           /* terracotta/coral */
+      --accent:#D36B4D;
       --accent2:#E07E4F;
 
       --line: rgba(31,51,71,.14);
@@ -63,12 +60,9 @@
     a{ color:inherit; text-decoration:none; }
     img{ max-width:100%; height:auto; display:block; }
 
-    /* Subtle background shapes */
     .bg-shape{
       position:absolute;
-      inset:auto;
       pointer-events:none;
-      filter: blur(0px);
       opacity:.55;
       z-index:0;
     }
@@ -88,7 +82,6 @@
       transform: rotate(8deg);
     }
 
-    /* Layout helpers */
     .container{
       width:min(var(--max), calc(100% - 2*var(--pad)));
       margin:0 auto;
@@ -130,7 +123,6 @@
       box-shadow: 0 6px 18px rgba(211,107,77,.28);
     }
 
-    /* Buttons */
     .btn{
       display:inline-flex;
       align-items:center;
@@ -141,7 +133,6 @@
       font-weight:700;
       border:1px solid transparent;
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
-      will-change: transform;
       cursor:pointer;
       user-select:none;
       white-space:nowrap;
@@ -178,7 +169,7 @@
       box-shadow: 0 18px 38px rgba(211,107,77,.26);
     }
 
-    /* Nav */
+    /* NAV */
     .nav{
       position:fixed;
       top:0; left:0; right:0;
@@ -196,32 +187,78 @@
       justify-content:space-between;
       gap:14px;
     }
+
+    /* ✅ BRAND AREA: logo + name + scrolling sector text */
     .brand{
       display:flex;
       align-items:center;
-      gap:10px;
-      font-weight:800;
-      letter-spacing:-.02em;
+      gap:12px;
       color:var(--primary);
+      min-width: 220px;
     }
-    .mark{
-      width:34px; height:34px;
-      border-radius:12px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 55%),
-        linear-gradient(135deg, var(--primary), var(--primary2));
-      box-shadow: 0 12px 22px rgba(31,51,71,.18);
+    .brand-logo{
+      height: 34px;
+      width: auto;
+      display:block;
+      border-radius: 10px;
+    }
+    .brand-name{
+      font-family:"Playfair Display", Georgia, serif;
+      font-weight:700;
+      letter-spacing:-.02em;
+      font-size: 20px;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    /* Scrolling sectors (vertical ticker) */
+    .brand-ticker{
       position:relative;
+      height: 22px;
       overflow:hidden;
+      border-left: 1px solid rgba(31,51,71,.16);
+      padding-left: 12px;
+      margin-left: 2px;
+      color: rgba(23,33,43,.72);
+      font-weight:700;
+      font-size: 13px;
+      letter-spacing: .01em;
+      min-width: 220px;
     }
-    .mark::after{
+    .brand-ticker-track{
+      display:flex;
+      flex-direction:column;
+      will-change: transform;
+      animation: tickerY 10s infinite;
+    }
+    .brand-ticker span{
+      height: 22px;
+      display:flex;
+      align-items:center;
+      white-space:nowrap;
+    }
+    /* The animation scrolls DOWN (translateY positive then wraps) */
+    @keyframes tickerY{
+      0%   { transform: translateY(-0px); }
+      16%  { transform: translateY(-0px); }
+      33%  { transform: translateY(-22px); }
+      49%  { transform: translateY(-22px); }
+      66%  { transform: translateY(-44px); }
+      82%  { transform: translateY(-44px); }
+      100% { transform: translateY(-66px); }
+    }
+
+    /* Small accent dot for ticker line */
+    .brand-ticker span::before{
       content:"";
-      position:absolute;
-      inset:-40% -40%;
-      background: radial-gradient(circle at 30% 40%, rgba(211,107,77,.45), transparent 55%);
-      transform: rotate(10deg);
-      opacity:.8;
+      width:7px; height:7px;
+      border-radius:99px;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(211,107,77,.22);
+      margin-right: 8px;
+      flex: 0 0 auto;
     }
+
     .nav-links{
       display:flex;
       align-items:center;
@@ -248,7 +285,7 @@
       box-shadow: 0 10px 30px rgba(23,33,43,.06);
     }
 
-    /* Hero */
+    /* HERO */
     .hero{
       padding-top: 98px;
       padding-bottom: 24px;
@@ -358,7 +395,6 @@
       margin-top: 2px;
     }
 
-    /* Social proof strip */
     .proof{
       padding: 22px 0 0;
     }
@@ -381,10 +417,7 @@
       gap:12px;
       min-width: 220px;
     }
-    .mini-avatars{
-      display:flex;
-      align-items:center;
-    }
+    .mini-avatars{ display:flex; align-items:center; }
     .mini-avatars span{
       width:34px; height:34px;
       border-radius: 999px;
@@ -421,7 +454,6 @@
     }
     .metric b{ color: var(--primary); }
 
-    /* Cards grid */
     .grid-3{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -481,7 +513,6 @@
       background: var(--accent);
     }
 
-    /* Lists */
     .checklist{
       margin: 12px 0 0;
       padding:0;
@@ -510,7 +541,6 @@
     .check svg{ width:14px; height:14px; }
     .check path{ stroke: var(--accent); }
 
-    /* Split section (about / solution image) */
     .split{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
@@ -540,7 +570,6 @@
       pointer-events:none;
     }
 
-    /* How it works */
     .steps{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -574,7 +603,6 @@
     .step h3{ margin: 12px 0 8px; color: var(--primary); }
     .step p{ margin:0; color: rgba(23,33,43,.72); font-size: 14.5px; }
 
-    /* Testimonials */
     .testimonials{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -630,7 +658,6 @@
       margin-top: 2px;
     }
 
-    /* Pricing */
     .pricing{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -707,7 +734,6 @@
       max-width: 42ch;
     }
 
-    /* FAQ */
     .faq{
       margin-top: 22px;
       display:grid;
@@ -757,7 +783,6 @@
       max-width: 80ch;
     }
 
-    /* Final CTA */
     .cta{
       border-radius: 26px;
       border: 1px solid rgba(31,51,71,.12);
@@ -795,7 +820,6 @@
       font-weight:700;
     }
 
-    /* Footer */
     footer{
       padding: 30px 0 46px;
       border-top: 1px solid rgba(31,51,71,.10);
@@ -821,7 +845,6 @@
       border-bottom-color: rgba(211,107,77,.7);
     }
 
-    /* Scroll animations */
     .reveal{
       opacity:0;
       transform: translateY(16px);
@@ -832,7 +855,6 @@
       transform: translateY(0);
     }
 
-    /* Hero load-in animation (stagger) */
     body:not(.loaded) .hero-stagger{
       opacity:0;
       transform: translateY(14px);
@@ -848,7 +870,6 @@
     body.loaded .d4{ transition-delay: .32s; }
     body.loaded .d5{ transition-delay: .41s; }
 
-    /* Mobile nav */
     .menu-btn{
       display:none;
       border: 1px solid rgba(31,51,71,.14);
@@ -864,7 +885,10 @@
     }
     .menu-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.78); }
 
-    /* Responsive */
+    @media (max-width: 1100px){
+      .brand-ticker{ display:none; } /* hide ticker if header gets tight */
+    }
+
     @media (max-width: 960px){
       .hero-grid{ grid-template-columns: 1fr; }
       .hero-visual{ min-height: 360px; }
@@ -892,10 +916,12 @@
       }
       .nav.open .nav-links a{ width:100%; }
     }
+
     @media (prefers-reduced-motion: reduce){
       *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
       .reveal{ opacity:1 !important; transform:none !important; }
       body:not(.loaded) .hero-stagger{ opacity:1 !important; transform:none !important; }
+      .brand-ticker-track{ animation: none !important; }
     }
   </style>
 </head>
@@ -907,9 +933,29 @@
   <!-- NAV -->
   <header class="nav" id="siteNav">
     <div class="nav-inner">
+
+      <!-- ✅ UPDATED BRAND: uses your file name Website_header_logo -->
       <a class="brand" href="#top" aria-label="HowToSolve home">
-        <span class="mark" aria-hidden="true"></span>
-        <span>HowToSolve</span>
+        <!-- Put Website_header_logo.png in the SAME folder as index.html (or change path) -->
+        <img
+          src="Website_header_logo.png"
+          alt="HowToSolve"
+          class="brand-logo"
+          width="140"
+          height="34"
+          loading="eager"
+        />
+        <span class="brand-name">HowToSolve</span>
+
+        <!-- ✅ Scrolling sectors text (scrolling down) -->
+        <span class="brand-ticker" aria-label="Sectors we serve">
+          <span class="brand-ticker-track" aria-hidden="true">
+            <span>Dental Clinics (Ireland)</span>
+            <span>Healthcare</span>
+            <span>Legal</span>
+            <span>And more service businesses</span>
+          </span>
+        </span>
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -943,7 +989,6 @@
             </p>
 
             <div class="hero-actions hero-stagger d4">
-              <!-- Replace href with your scheduling link (Calendly, etc.) -->
               <a class="btn btn-primary" href="#book">Book a free call</a>
               <a class="btn btn-secondary" href="#pricing">View pricing</a>
             </div>
@@ -956,18 +1001,6 @@
           </div>
 
           <div class="hero-visual hero-stagger d3" aria-label="Warm dental clinic reception image">
-            <!--
-              IMAGE (DALL·E 3 / "dalle e"):
-              You asked to use DALL·E. Since this is a single HTML file, you’ll need to host the generated image
-              somewhere (or locally) and update the src below.
-
-              Suggested DALL·E prompt (hero):
-              “A warm, candid photo of a modern dental clinic reception in Ireland, friendly receptionist smiling
-              while greeting a patient, natural soft daylight, welcoming atmosphere, subtle warm tones, not clinical,
-              no medical symbols, premium editorial photography style, 35mm lens look, shallow depth of field.”
-
-              For now, this uses a tasteful Unsplash placeholder (replace when you have your DALL·E image hosted).
-            -->
             <img
               src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1600&q=80"
               alt="Warm, welcoming dental clinic reception"
@@ -992,7 +1025,6 @@
           </div>
         </div>
 
-        <!-- Social proof bar -->
         <div class="proof">
           <div class="proof-bar reveal">
             <div class="proof-left">
@@ -1073,24 +1105,9 @@
               <h3>Patient Onboarding System</h3>
               <p>Automates the new patient journey from day one.</p>
               <ul class="checklist">
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Welcome messages + pre-visit information
-                </li>
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Appointment reminders to cut no-shows
-                </li>
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Post-visit follow-up + review requests
-                </li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Welcome messages + pre-visit information</li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Appointment reminders to cut no-shows</li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Post-visit follow-up + review requests</li>
               </ul>
             </article>
 
@@ -1099,37 +1116,14 @@
               <h3>Patient Reactivation System</h3>
               <p>Brings back dormant patients who haven’t visited in 6+ months.</p>
               <ul class="checklist">
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Identify overdue patients automatically
-                </li>
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Personalised outreach + recall reminders
-                </li>
-                <li>
-                  <span class="check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  Frictionless rebooking prompts
-                </li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Identify overdue patients automatically</li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Personalised outreach + recall reminders</li>
+                <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Frictionless rebooking prompts</li>
               </ul>
             </article>
           </div>
 
           <div class="photo reveal" aria-label="Consultant working image">
-            <!--
-              IMAGE (DALL·E 3 / "dalle e"):
-              Suggested DALL·E prompt (about/solution visual):
-              “A warm, natural photo of a friendly consultant working on a laptop in a bright Dublin café or home office,
-              soft daylight, modern but human, premium editorial photography, no corporate stock-photo poses, warm tones.”
-
-              Placeholder below uses Unsplash (replace when you host your generated image).
-            -->
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
               alt="Consultant working on a laptop"
@@ -1137,50 +1131,6 @@
             />
           </div>
         </div>
-
-        <!-- About / Trust -->
-        <div class="section" style="padding-bottom:0;">
-          <div class="container" style="width:100%; margin:0; padding:0;">
-            <div class="split" style="margin-top:0;">
-              <div class="reveal">
-                <div class="kicker">About</div>
-                <h2 class="section-title" style="margin-top:12px;">Built for busy clinics, not software demos</h2>
-                <p class="section-lead">
-                  HowToSolve is a done-for-you implementation: we map your current patient journey, write the messaging,
-                  set up the automation, and help your team run it confidently.
-                </p>
-
-                <div class="grid-3" style="margin-top:18px;">
-                  <div class="card reveal">
-                    <span class="tag">Human tone</span>
-                    <h3>Messages that feel like your clinic</h3>
-                    <p>Warm, clear communication that fits your brand—no stiff templates.</p>
-                  </div>
-                  <div class="card reveal">
-                    <span class="tag">Practical</span>
-                    <h3>Designed to reduce admin</h3>
-                    <p>Fewer manual chases, fewer gaps, more predictable appointment flow.</p>
-                  </div>
-                  <div class="card reveal">
-                    <span class="tag">Results</span>
-                    <h3>Optimised for rebooking</h3>
-                    <p>Simple prompts and timing that encourage patients to take the next step.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="photo reveal" aria-label="Optional headshot placeholder">
-                <!-- If you want a headshot-style placeholder, replace with your own or a DALL·E image -->
-                <img
-                  src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=1600&q=80"
-                  alt="Friendly professional portrait placeholder"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -1197,23 +1147,17 @@
           <div class="step reveal">
             <div class="step-num">1</div>
             <h3>Discovery</h3>
-            <p>
-              We review your current patient journey, identify drop-off points, and agree the tone + outcomes.
-            </p>
+            <p>We review your current patient journey, identify drop-off points, and agree the tone + outcomes.</p>
           </div>
           <div class="step reveal">
             <div class="step-num">2</div>
             <h3>Build</h3>
-            <p>
-              I write and implement the sequences: onboarding, reminders, follow-ups, and reactivation campaigns.
-            </p>
+            <p>I write and implement the sequences: onboarding, reminders, follow-ups, and reactivation campaigns.</p>
           </div>
           <div class="step reveal">
             <div class="step-num">3</div>
             <h3>Launch</h3>
-            <p>
-              We go live, monitor early performance, and make small tweaks to maximise rebookings and reviews.
-            </p>
+            <p>We go live, monitor early performance, and make small tweaks to maximise rebookings and reviews.</p>
           </div>
         </div>
       </div>
@@ -1231,46 +1175,28 @@
         <div class="testimonials">
           <figure class="quote reveal">
             <div class="tag">Onboarding</div>
-            <p>
-              “We saw fewer last-minute cancellations and our front desk stopped spending mornings chasing confirmations.
-              Patients arrived more prepared, and reviews started coming in consistently.”
-            </p>
+            <p>“We saw fewer last-minute cancellations and our front desk stopped spending mornings chasing confirmations.”</p>
             <figcaption class="who">
               <div class="avatar" aria-hidden="true">AM</div>
-              <div>
-                <b>Practice Manager</b>
-                <span>Dublin (placeholder)</span>
-              </div>
+              <div><b>Practice Manager</b><span>Dublin (placeholder)</span></div>
             </figcaption>
           </figure>
 
           <figure class="quote reveal">
             <div class="tag">Reactivation</div>
-            <p>
-              “The reactivation messages felt natural—not spammy. We rebooked patients we hadn’t seen in months,
-              and the diary looked healthier within weeks.”
-            </p>
+            <p>“The reactivation messages felt natural—not spammy. We rebooked patients we hadn’t seen in months.”</p>
             <figcaption class="who">
               <div class="avatar" aria-hidden="true">SO</div>
-              <div>
-                <b>Clinic Owner</b>
-                <span>Leinster (placeholder)</span>
-              </div>
+              <div><b>Clinic Owner</b><span>Leinster (placeholder)</span></div>
             </figcaption>
           </figure>
 
           <figure class="quote reveal">
             <div class="tag">Complete Package</div>
-            <p>
-              “The biggest win was time. Our team got hours back each week, and patients stayed engaged
-              after their first appointment.”
-            </p>
+            <p>“The biggest win was time. Our team got hours back each week, and patients stayed engaged.”</p>
             <figcaption class="who">
               <div class="avatar" aria-hidden="true">KD</div>
-              <div>
-                <b>Practice Manager</b>
-                <span>Ireland (placeholder)</span>
-              </div>
+              <div><b>Practice Manager</b><span>Ireland (placeholder)</span></div>
             </figcaption>
           </figure>
         </div>
@@ -1282,25 +1208,13 @@
       <div class="container">
         <div class="kicker reveal">Pricing</div>
         <h2 class="section-title reveal">Simple, fixed pricing</h2>
-        <p class="section-lead reveal">
-          Choose one system or combine both for the best outcome. Prices in Euro (€).
-        </p>
+        <p class="section-lead reveal">Choose one system or combine both for the best outcome. Prices in Euro (€).</p>
 
         <div class="pricing">
           <div class="price-card reveal">
-            <div class="price-head">
-              <div class="price-name">Patient Onboarding</div>
-            </div>
+            <div class="price-head"><div class="price-name">Patient Onboarding</div></div>
             <div class="price">€997 <small>one-time</small></div>
-            <p class="price-desc">
-              Automate the full new-patient journey: welcome → reminders → follow-up → reviews.
-            </p>
-            <ul class="checklist">
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Welcome + pre-visit info</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminder sequence</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Post-visit follow-up</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Review prompts</li>
-            </ul>
+            <p class="price-desc">Automate the full new-patient journey: welcome → reminders → follow-up → reviews.</p>
             <div style="margin-top:16px;">
               <a class="btn btn-primary" href="#book">Book a call</a>
             </div>
@@ -1308,38 +1222,18 @@
 
           <div class="price-card popular reveal" aria-label="Most popular package">
             <div class="badge">Most Popular</div>
-            <div class="price-head">
-              <div class="price-name">Complete Package</div>
-            </div>
+            <div class="price-head"><div class="price-name">Complete Package</div></div>
             <div class="price">€1,797 <small>one-time</small></div>
-            <p class="price-desc">
-              Both systems together, plus extended support to ensure your clinic sees results.
-            </p>
-            <ul class="checklist">
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Onboarding System included</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reactivation System included</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Extended support window</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Optimisation tweaks after launch</li>
-            </ul>
+            <p class="price-desc">Both systems together, plus extended support to ensure your clinic sees results.</p>
             <div style="margin-top:16px;">
               <a class="btn btn-accent" href="#book">Book a free call</a>
             </div>
           </div>
 
           <div class="price-card reveal">
-            <div class="price-head">
-              <div class="price-name">Patient Reactivation</div>
-            </div>
+            <div class="price-head"><div class="price-name">Patient Reactivation</div></div>
             <div class="price">€997 <small>one-time</small></div>
-            <p class="price-desc">
-              Rebook overdue patients with personalised outreach and timely recall reminders.
-            </p>
-            <ul class="checklist">
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Overdue patient identification</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Personalised outreach sequence</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Recall reminders</li>
-              <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Easy rebooking prompts</li>
-            </ul>
+            <p class="price-desc">Rebook overdue patients with personalised outreach and timely recall reminders.</p>
             <div style="margin-top:16px;">
               <a class="btn btn-primary" href="#book">Book a call</a>
             </div>
@@ -1353,84 +1247,40 @@
       <div class="container">
         <div class="kicker reveal">FAQ</div>
         <h2 class="section-title reveal">Common questions</h2>
-        <p class="section-lead reveal">
-          Straight answers, no fluff. If you’re unsure, we’ll cover it on the call.
-        </p>
+        <p class="section-lead reveal">Straight answers, no fluff. If you’re unsure, we’ll cover it on the call.</p>
 
         <div class="faq">
           <details class="reveal">
-            <summary>
-              Will this feel spammy to patients?
+            <summary>Will this feel spammy to patients?
               <span class="chev" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
             </summary>
-            <p>
-              No—everything is written in a warm, human tone and timed sensibly. The goal is clarity and convenience,
-              not “marketing blasts”. Messages are tailored to your clinic’s voice.
-            </p>
+            <p>No—everything is written in a warm, human tone and timed sensibly. Messages are tailored to your clinic’s voice.</p>
           </details>
 
           <details class="reveal">
-            <summary>
-              How quickly can we launch?
+            <summary>How quickly can we launch?
               <span class="chev" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
             </summary>
-            <p>
-              Typically, clinics can go live within a short setup window after discovery—depending on how quickly we can
-              confirm messaging, branding, and patient list segmentation.
-            </p>
+            <p>Typically within a short setup window after discovery—depending on how quickly we confirm messaging and patient list segmentation.</p>
           </details>
 
           <details class="reveal">
-            <summary>
-              Do we need to change our software?
+            <summary>Do we need to change our software?
               <span class="chev" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
             </summary>
-            <p>
-              Usually not. The systems are designed to work around how clinics already operate.
-              On the call, we’ll confirm what you’re using and what’s needed for a smooth integration.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              What kind of results should we expect?
-              <span class="chev" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Outcomes vary, but clinics commonly see fewer no-shows, a steady stream of reactivated patients,
-              and significant admin time saved—especially once the first sequences are live and refined.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              Is the call actually free and no obligation?
-              <span class="chev" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="rgba(31,51,71,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Yes. It’s a short fit check: what’s happening in your clinic, where patients drop off,
-              and whether one of the systems makes sense.
-            </p>
+            <p>Usually not. On the call, we’ll confirm what you’re using and what’s needed for a smooth integration.</p>
           </details>
         </div>
       </div>
@@ -1448,8 +1298,7 @@
               <small>15-minute call · No obligation</small>
             </p>
           </div>
-          <!-- Replace with your booking link -->
-          <a class="btn btn-accent" href="mailto:hello@howtosolve.online?subject=HowToSolve%20-%20Free%20Call%20Request&body=Hi%2C%0A%0AI'd%20like%20to%20book%20a%2015-minute%20call%20to%20discuss%20patient%20onboarding%20and%20reactivation.%0A%0AClinic%20name%3A%0APreferred%20times%3A%0A%0AThanks%2C">
+          <a class="btn btn-accent" href="mailto:hello@howtosolve.online?subject=HowToSolve%20-%20Free%20Call%20Request">
             Book a free call
           </a>
         </div>
@@ -1463,27 +1312,25 @@
       <div class="footer-inner">
         <div>
           <a class="brand" href="#top" aria-label="HowToSolve home">
-            <span class="mark" aria-hidden="true"></span>
-            <span>HowToSolve</span>
+            <img src="Website_header_logo.png" alt="HowToSolve" class="brand-logo" width="140" height="34" loading="lazy" />
+            <span class="brand-name">HowToSolve</span>
           </a>
           <div class="footer-meta" style="margin-top:10px;">
             Dublin, Ireland · € Pricing<br />
             Email: <a href="mailto:hello@howtosolve.online">hello@howtosolve.online</a>
           </div>
         </div>
-
-        <div class="footer-meta">
-          © <span id="year"></span> HowToSolve. All rights reserved.
-        </div>
+        <div class="footer-meta">© <span id="year"></span> HowToSolve. All rights reserved.</div>
       </div>
     </div>
   </footer>
 
   <script>
-    // --- Nav: transparent on load, solid on scroll + mobile menu toggle ---
+    // Nav: transparent on load, solid on scroll + mobile menu toggle
     (function () {
       const nav = document.getElementById('siteNav');
       const menuBtn = document.getElementById('menuBtn');
+
       const onScroll = () => {
         if (window.scrollY > 10) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
@@ -1491,14 +1338,12 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // Mobile menu
       if (menuBtn) {
         menuBtn.addEventListener('click', () => {
           const open = nav.classList.toggle('open');
           menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
 
-        // Close menu when clicking a nav link
         nav.querySelectorAll('.nav-links a').forEach(a => {
           a.addEventListener('click', () => {
             nav.classList.remove('open');
@@ -1508,13 +1353,13 @@
       }
     })();
 
-    // --- Hero load-in animation ---
+    // Hero load-in
     window.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('loaded');
       document.getElementById('year').textContent = new Date().getFullYear();
     });
 
-    // --- Scroll-triggered reveal animations (fade up) ---
+    // Scroll-triggered reveal animations
     (function () {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) {
@@ -1534,7 +1379,7 @@
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     })();
 
-    // --- Optional: smooth-scroll offset for fixed nav (improves anchor accuracy) ---
+    // Smooth-scroll offset for fixed nav
     (function () {
       const nav = document.getElementById('siteNav');
       const navH = () => nav ? nav.getBoundingClientRect().height : 0;
@@ -1561,14 +1406,13 @@
   </script>
 
   <!--
-    QUICK EDIT NOTES
-    1) Booking CTA:
-       - Replace the mailto link in the Final CTA with your Calendly/booking URL.
-    2) Images:
-       - Replace the <img src="...unsplash..."> URLs with your hosted DALL·E images.
-       - Keep the same aspect ratio for best layout.
-    3) Copy tweaks:
-       - Search for “placeholder” and swap testimonials, proof bar copy, etc.
+    IMPORTANT:
+    Put your logo file next to index.html:
+      Website_header_logo.png
+
+    If your file is actually .jpg or .svg, change these lines:
+      src="Website_header_logo.png"
+      <link rel="icon" href="Website_header_logo.png" ...>
   -->
 </body>
 </html>

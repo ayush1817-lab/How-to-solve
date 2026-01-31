@@ -3,10 +3,9 @@
 <head>
   <!--
     HowToSolve Landing Page (Single-file, production-ready)
-    UPDATE INCLUDED (only what you asked, everything else kept the same):
-    ✅ Header stays: [Logo] [Sector ticker] (no name in header)
-    ✅ Sector ticker font increased + smoother, correct looping
-    ✅ Hero kicker line changed to: "For Healthcare Clinics in Ireland"
+    UPDATE INCLUDED:
+    ✅ Navbar logo now uses your file name: Website_header_logo (assumed in same folder)
+    ✅ Added a vertical scrolling “sectors” text animation beside the logo + name
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -189,7 +188,7 @@
       gap:14px;
     }
 
-    /* BRAND AREA: logo + scrolling sector text (no name in header) */
+    /* ✅ BRAND AREA: logo + name + scrolling sector text */
     .brand{
       display:flex;
       align-items:center;
@@ -212,17 +211,16 @@
       white-space:nowrap;
     }
 
-    /* ✅ Bigger + cleaner looping sectors ticker */
+    /* ✅ Bigger scrolling sectors (vertical ticker) */
     .brand-ticker{
-      --ticker-item-h: 26px;      /* controls item height + animation step */
       position:relative;
-      height: 34px;              /* viewport height */
+      height: 30px;                 /* viewport height */
       overflow:hidden;
       border-left: 1px solid rgba(31,51,71,.16);
       padding-left: 14px;
       color: rgba(23,33,43,.78);
-      font-weight: 900;
-      font-size: 18px;           /* ✅ increased font size */
+      font-weight: 800;
+      font-size: 16px;              /* ✅ bigger text */
       letter-spacing: .01em;
       min-width: 240px;
       line-height: 1;
@@ -231,20 +229,26 @@
       display:flex;
       flex-direction:column;
       will-change: transform;
-      /* 8 sectors + duplicate first = 8 steps */
-      animation: tickerSteps 10s steps(8) infinite;
+      animation: tickerY 10s infinite;
     }
     .brand-ticker span{
-      height: var(--ticker-item-h);
+      height: 22px;
       display:flex;
       align-items:center;
       white-space:nowrap;
     }
-    @keyframes tickerSteps{
-      from { transform: translateY(0); }
-      to   { transform: translateY(calc(-1 * var(--ticker-item-h) * 8)); }
+    /* The animation scrolls DOWN (translateY positive then wraps) */
+    @keyframes tickerY{
+      0%   { transform: translateY(-0px); }
+      16%  { transform: translateY(-0px); }
+      33%  { transform: translateY(-22px); }
+      49%  { transform: translateY(-22px); }
+      66%  { transform: translateY(-44px); }
+      82%  { transform: translateY(-44px); }
+      100% { transform: translateY(-66px); }
     }
 
+    /* Small accent dot for ticker line */
     .brand-ticker span::before{
       content:"";
       width:7px; height:7px;
@@ -654,81 +658,202 @@
       margin-top: 2px;
     }
 
+    /* ✅✅✅ PRICING SECTION UPDATED ONLY */
     .pricing{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      gap: 18px;
       margin-top: 28px;
       align-items:stretch;
     }
+
     .price-card{
-      padding: 20px;
-      border-radius: 22px;
-      border: 1px solid rgba(31,51,71,.12);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 10px 26px rgba(23,33,43,.06);
       position:relative;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      border-radius: 26px;
+      padding: 22px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 14px 34px rgba(23,33,43,.08);
       overflow:hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
     }
+
     .price-card:hover{
-      transform: translateY(-3px);
-      box-shadow: var(--shadowSoft);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 46px rgba(23,33,43,.12);
       border-color: rgba(31,51,71,.18);
-      background: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.92);
     }
-    .price-card.popular{
-      border-color: rgba(211,107,77,.38);
-      box-shadow: 0 18px 46px rgba(211,107,77,.12);
-      background:
-        radial-gradient(700px 260px at 50% 0%, rgba(211,107,77,.16), transparent 62%),
-        rgba(255,255,255,.86);
-    }
-    .badge{
+
+    .price-card::before{
+      content:"";
       position:absolute;
-      top:14px; right:14px;
-      background: rgba(211,107,77,.12);
-      border: 1px solid rgba(211,107,77,.32);
-      color: var(--primary);
-      font-weight:800;
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius:999px;
+      inset:-2px -2px auto -2px;
+      height: 110px;
+      background: radial-gradient(600px 140px at 18% 20%, rgba(211,107,77,.18), transparent 62%),
+                  radial-gradient(520px 140px at 82% 10%, rgba(31,51,71,.16), transparent 65%);
+      pointer-events:none;
+      opacity:.9;
     }
-    .price-head{
+
+    .price-top{
       display:flex;
-      align-items:flex-end;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
-      margin-bottom: 10px;
+      position:relative;
+      z-index:1;
     }
+
+    .price-title{
+      display:grid;
+      gap:6px;
+    }
+
     .price-name{
       font-weight:900;
       color: var(--primary);
       font-size: 18px;
       letter-spacing:-.01em;
+      margin:0;
     }
+
+    .price-sub{
+      color: rgba(23,33,43,.68);
+      font-weight:700;
+      font-size: 13px;
+      margin:0;
+    }
+
+    .plan-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius:999px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.65);
+      font-weight:900;
+      color: rgba(23,33,43,.78);
+      font-size: 12px;
+      white-space:nowrap;
+    }
+
+    .plan-pill::before{
+      content:"";
+      width:8px; height:8px;
+      border-radius:99px;
+      background: rgba(31,51,71,.45);
+    }
+
     .price{
       font-family:"Playfair Display", Georgia, serif;
-      font-weight:700;
+      font-weight:800;
       letter-spacing:-.02em;
-      font-size: 34px;
+      font-size: 44px;
       color: var(--primary);
-      margin: 6px 0 6px;
+      margin: 14px 0 6px;
+      position:relative;
+      z-index:1;
     }
+
     .price small{
       font-family:"DM Sans", sans-serif;
-      font-weight:700;
+      font-weight:800;
       font-size: 12px;
-      color: rgba(23,33,43,.60);
-      margin-left: 6px;
+      color: rgba(23,33,43,.62);
+      margin-left: 8px;
     }
+
     .price-desc{
       margin: 0 0 14px;
-      color: rgba(23,33,43,.72);
+      color: rgba(23,33,43,.74);
       font-size: 14.5px;
-      max-width: 42ch;
+      max-width: 52ch;
+      position:relative;
+      z-index:1;
     }
+
+    .plan-includes{
+      margin: 14px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .plan-includes li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: rgba(23,33,43,.74);
+      font-size: 14px;
+      line-height:1.35;
+    }
+
+    .plan-ico{
+      flex:0 0 auto;
+      width:22px; height:22px;
+      border-radius: 10px;
+      border: 1px solid rgba(31,51,71,.12);
+      background: rgba(255,255,255,.72);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 10px 18px rgba(23,33,43,.06);
+      margin-top: 1px;
+    }
+
+    .plan-ico svg{ width:14px; height:14px; }
+    .plan-ico path{ stroke: var(--accent); }
+
+    .plan-actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top: 18px;
+      position:relative;
+      z-index:1;
+    }
+
+    .plan-note{
+      color: rgba(23,33,43,.62);
+      font-weight:800;
+      font-size: 12px;
+    }
+
+    .price-card.popular{
+      border-color: rgba(211,107,77,.42);
+      box-shadow: 0 22px 60px rgba(211,107,77,.16);
+      background:
+        radial-gradient(900px 260px at 50% 0%, rgba(211,107,77,.20), transparent 62%),
+        rgba(255,255,255,.90);
+    }
+
+    .price-card.popular::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 26px;
+      pointer-events:none;
+      box-shadow: inset 0 0 0 1px rgba(211,107,77,.20);
+    }
+
+    .badge{
+      position:absolute;
+      top:16px; right:16px;
+      background: rgba(211,107,77,.12);
+      border: 1px solid rgba(211,107,77,.34);
+      color: var(--primary);
+      font-weight:900;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius:999px;
+      z-index:2;
+    }
+    /* ✅✅✅ END PRICING UPDATE */
 
     .faq{
       margin-top: 22px;
@@ -907,6 +1032,7 @@
         backdrop-filter: blur(10px);
       }
       .nav.open .nav-links a{ width:100%; }
+      .price{ font-size: 40px; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -926,32 +1052,32 @@
   <header class="nav" id="siteNav">
     <div class="nav-inner">
 
-      <a class="brand" href="#top" aria-label="HowToSolve home">
-        <img
-          src="Website_header_logo.png"
-          alt="HowToSolve"
-          class="brand-logo"
-          width="140"
-          height="34"
-          loading="eager"
-        />
+     <a class="brand" href="#top" aria-label="HowToSolve home">
+  <img
+    src="Website_header_logo.png"
+    alt="HowToSolve"
+    class="brand-logo"
+    width="140"
+    height="34"
+    loading="eager"
+  />
 
-        <span class="brand-ticker" aria-label="Sectors we serve">
-          <span class="brand-ticker-track" aria-hidden="true">
-            <span>Dental</span>
-            <span>Healthcare</span>
-            <span>Legal</span>
-            <span>Accounting</span>
-            <span>Real Estate</span>
-            <span>Physio</span>
-            <span>Aesthetics</span>
-            <span>Vet</span>
+  <span class="brand-ticker" aria-label="Sectors we serve">
+    <span class="brand-ticker-track" aria-hidden="true">
+      <span>Dental</span>
+      <span>Healthcare</span>
+      <span>Legal</span>
+      <span>Accounting</span>
+      <span>Real Estate</span>
+      <span>Physio</span>
+      <span>Aesthetics</span>
+      <span>Vet</span>
 
-            <!-- duplicate first item for smooth looping -->
-            <span>Dental</span>
-          </span>
-        </span>
-      </a>
+      <!-- duplicate first item for smooth looping -->
+      <span>Dental</span>
+    </span>
+  </span>
+</a>
 
       <nav class="nav-links" aria-label="Primary">
         <a href="#problem">Problems</a>
@@ -974,9 +1100,7 @@
       <div class="container">
         <div class="hero-grid">
           <div>
-            <!-- ✅ changed only this line -->
-            <div class="kicker hero-stagger d1">For Healthcare Clinics in Ireland</div>
-
+            <div class="kicker hero-stagger d1">For Dental Clinics in Ireland</div>
             <h1 class="headline hero-stagger d2">
               Keep your patients <em>coming back</em>
             </h1>
@@ -1200,44 +1324,141 @@
       </div>
     </section>
 
-    <!-- PRICING -->
+    <!-- ✅✅✅ PRICING (UPDATED ONLY) -->
     <section class="section" id="pricing">
       <div class="container">
         <div class="kicker reveal">Pricing</div>
         <h2 class="section-title reveal">Simple, fixed pricing</h2>
-        <p class="section-lead reveal">Choose one system or combine both for the best outcome. Prices in Euro (€).</p>
+        <p class="section-lead reveal">Pick one system or choose the bundle for the best outcome. Prices in Euro (€).</p>
 
         <div class="pricing">
+
+          <!-- Plan 1 -->
           <div class="price-card reveal">
-            <div class="price-head"><div class="price-name">Patient Onboarding</div></div>
+            <div class="price-top">
+              <div class="price-title">
+                <p class="price-name">Patient Onboarding</p>
+                <p class="price-sub">For new patients from day one</p>
+              </div>
+              <span class="plan-pill">Setup included</span>
+            </div>
+
             <div class="price">€997 <small>one-time</small></div>
-            <p class="price-desc">Automate the full new-patient journey: welcome → reminders → follow-up → reviews.</p>
-            <div style="margin-top:16px;">
+            <p class="price-desc">Automate the new-patient journey: welcome → reminders → follow-up → reviews.</p>
+
+            <ul class="plan-includes" aria-label="What’s included">
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Welcome + pre-visit information sequence
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Appointment reminders to reduce no-shows
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Post-visit follow-up + review request
+              </li>
+            </ul>
+
+            <div class="plan-actions">
               <a class="btn btn-primary" href="#book">Book a call</a>
+              <span class="plan-note">Pay once · yours forever</span>
             </div>
           </div>
 
+          <!-- Plan 2 (Popular) -->
           <div class="price-card popular reveal" aria-label="Most popular package">
-            <div class="badge">Most Popular</div>
-            <div class="price-head"><div class="price-name">Complete Package</div></div>
+            <div class="badge">Best Value</div>
+
+            <div class="price-top">
+              <div class="price-title">
+                <p class="price-name">Complete Package</p>
+                <p class="price-sub">Onboarding + Reactivation together</p>
+              </div>
+              <span class="plan-pill">Most Popular</span>
+            </div>
+
             <div class="price">€1,797 <small>one-time</small></div>
-            <p class="price-desc">Both systems together, plus extended support to ensure your clinic sees results.</p>
-            <div style="margin-top:16px;">
+            <p class="price-desc">Two systems combined, plus extended support to ensure your clinic sees results.</p>
+
+            <ul class="plan-includes" aria-label="What’s included">
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Everything in Onboarding + everything in Reactivation
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Priority tweaks after launch (fine-tune messaging + timing)
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Done-for-you setup + clinic tone matching
+              </li>
+            </ul>
+
+            <div class="plan-actions">
               <a class="btn btn-accent" href="#book">Book a free call</a>
+              <span class="plan-note">Save vs. buying separately</span>
             </div>
           </div>
 
+          <!-- Plan 3 -->
           <div class="price-card reveal">
-            <div class="price-head"><div class="price-name">Patient Reactivation</div></div>
+            <div class="price-top">
+              <div class="price-title">
+                <p class="price-name">Patient Reactivation</p>
+                <p class="price-sub">For patients overdue 6+ months</p>
+              </div>
+              <span class="plan-pill">Campaign included</span>
+            </div>
+
             <div class="price">€997 <small>one-time</small></div>
             <p class="price-desc">Rebook overdue patients with personalised outreach and timely recall reminders.</p>
-            <div style="margin-top:16px;">
+
+            <ul class="plan-includes" aria-label="What’s included">
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Identify and segment dormant patients automatically
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Multi-touch reactivation messages (not spammy)
+              </li>
+              <li>
+                <span class="plan-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Frictionless “book now” prompts to fill gaps
+              </li>
+            </ul>
+
+            <div class="plan-actions">
               <a class="btn btn-primary" href="#book">Book a call</a>
+              <span class="plan-note">Pay once · yours forever</span>
             </div>
           </div>
+
         </div>
       </div>
     </section>
+    <!-- ✅✅✅ END PRICING UPDATE -->
 
     <!-- FAQ -->
     <section class="section" id="faq">

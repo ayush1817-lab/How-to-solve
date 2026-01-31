@@ -190,18 +190,18 @@
 
     /* ✅ BRAND AREA: logo + name + scrolling sector text */
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--primary);
-      min-width: 220px;
-    }
-    .brand-logo{
-      height: 34px;
-      width: auto;
-      display:block;
-      border-radius: 10px;
-    }
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:var(--primary);
+  min-width: 240px;
+}
+   .brand-logo{
+  height: 36px;      /* logo height */
+  width: auto;
+  display:block;
+  border-radius: 10px;
+}
     .brand-name{
       font-family:"Playfair Display", Georgia, serif;
       font-weight:700;
@@ -211,20 +211,20 @@
       white-space:nowrap;
     }
 
-    /* Scrolling sectors (vertical ticker) */
-    .brand-ticker{
-      position:relative;
-      height: 22px;
-      overflow:hidden;
-      border-left: 1px solid rgba(31,51,71,.16);
-      padding-left: 12px;
-      margin-left: 2px;
-      color: rgba(23,33,43,.72);
-      font-weight:700;
-      font-size: 13px;
-      letter-spacing: .01em;
-      min-width: 220px;
-    }
+    /* ✅ Bigger scrolling sectors (vertical ticker) */
+.brand-ticker{
+  position:relative;
+  height: 30px;                 /* viewport height */
+  overflow:hidden;
+  border-left: 1px solid rgba(31,51,71,.16);
+  padding-left: 14px;
+  color: rgba(23,33,43,.78);
+  font-weight: 800;
+  font-size: 16px;              /* ✅ bigger text */
+  letter-spacing: .01em;
+  min-width: 240px;
+  line-height: 1;
+}
     .brand-ticker-track{
       display:flex;
       flex-direction:column;

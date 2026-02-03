@@ -318,10 +318,10 @@
       border-radius: 8px;
     }
 
-    /* Fixed sector ticker - contained properly */
+    /* Fixed sector ticker - vertically centered */
     .brand-ticker {
       position: relative;
-      height: 22px;
+      height: 32px;
       overflow: hidden;
       border-left: 1px solid rgba(31, 51, 71, .16);
       padding-left: 12px;
@@ -331,7 +331,8 @@
       letter-spacing: .01em;
       min-width: 100px;
       max-width: 120px;
-      line-height: 22px;
+      display: flex;
+      align-items: center;
     }
 
     .brand-ticker-track {
@@ -339,14 +340,16 @@
       flex-direction: column;
       will-change: transform;
       animation: tickerY 12s infinite;
+      height: 100%;
     }
 
     .brand-ticker span {
-      height: 22px;
+      height: 32px;
       display: flex;
       align-items: center;
       white-space: nowrap;
       font-size: 12px;
+      line-height: 32px;
     }
 
     .brand-ticker span::before {
@@ -368,41 +371,41 @@
 
       12.5%,
       22.5% {
-        transform: translateY(-22px);
+        transform: translateY(-32px);
       }
 
       25%,
       35% {
-        transform: translateY(-44px);
+        transform: translateY(-64px);
       }
 
       37.5%,
       47.5% {
-        transform: translateY(-66px);
+        transform: translateY(-96px);
       }
 
       50%,
       60% {
-        transform: translateY(-88px);
+        transform: translateY(-128px);
       }
 
       62.5%,
       72.5% {
-        transform: translateY(-110px);
+        transform: translateY(-160px);
       }
 
       75%,
       85% {
-        transform: translateY(-132px);
+        transform: translateY(-192px);
       }
 
       87.5%,
       97.5% {
-        transform: translateY(-154px);
+        transform: translateY(-224px);
       }
 
       100% {
-        transform: translateY(-176px);
+        transform: translateY(-256px);
       }
     }
 
@@ -439,14 +442,11 @@
       box-shadow: 0 10px 30px rgba(23, 33, 43, .06);
     }
 
-    /* HERO - Enhanced */
+    /* HERO - Fixed layout */
     .hero {
       padding-top: 100px;
-      padding-bottom: 24px;
+      padding-bottom: 40px;
       position: relative;
-      min-height: 85vh;
-      display: flex;
-      align-items: center;
     }
 
     .hero .container {

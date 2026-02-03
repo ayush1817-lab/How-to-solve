@@ -61,9 +61,8 @@
       font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(ellipse 1200px 600px at 15% -5%, rgba(211, 107, 77, .08), transparent 55%),
-        radial-gradient(ellipse 900px 500px at 90% 5%, rgba(31, 51, 71, .08), transparent 50%),
-        radial-gradient(ellipse 800px 400px at 50% 100%, rgba(211, 107, 77, .05), transparent 60%),
+        radial-gradient(ellipse 1200px 600px at 15% -5%, rgba(211, 107, 77, .04), transparent 55%),
+        radial-gradient(ellipse 900px 500px at 90% 5%, rgba(31, 51, 71, .05), transparent 50%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       background-attachment: fixed;
       line-height: 1.6;
@@ -87,7 +86,7 @@
     .bg-shape {
       position: fixed;
       pointer-events: none;
-      opacity: .35;
+      opacity: .2;
       z-index: 0;
       filter: blur(60px);
     }
@@ -321,7 +320,7 @@
     /* Fixed sector ticker - vertically centered */
     .brand-ticker {
       position: relative;
-      height: 32px;
+      height: 24px;
       overflow: hidden;
       border-left: 1px solid rgba(31, 51, 71, .16);
       padding-left: 12px;
@@ -329,38 +328,30 @@
       font-weight: 700;
       font-size: 13px;
       letter-spacing: .01em;
-      min-width: 100px;
+      min-width: 90px;
       max-width: 120px;
-      display: flex;
-      align-items: center;
+      align-self: center;
     }
 
     .brand-ticker-track {
       display: flex;
       flex-direction: column;
       will-change: transform;
-      animation: tickerY 12s infinite;
-      height: 100%;
+      animation: tickerY 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .brand-ticker span {
-      height: 32px;
+      height: 24px;
       display: flex;
       align-items: center;
       white-space: nowrap;
-      font-size: 12px;
-      line-height: 32px;
+      font-size: 13px;
+      line-height: 24px;
     }
 
-    .brand-ticker span::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 99px;
-      background: var(--accent);
-      margin-right: 6px;
-      flex-shrink: 0;
-    }
+
+
+
 
     @keyframes tickerY {
 
@@ -371,41 +362,41 @@
 
       12.5%,
       22.5% {
-        transform: translateY(-32px);
+        transform: translateY(-24px);
       }
 
       25%,
       35% {
-        transform: translateY(-64px);
+        transform: translateY(-48px);
       }
 
       37.5%,
       47.5% {
-        transform: translateY(-96px);
+        transform: translateY(-72px);
       }
 
       50%,
       60% {
-        transform: translateY(-128px);
+        transform: translateY(-96px);
       }
 
       62.5%,
       72.5% {
-        transform: translateY(-160px);
+        transform: translateY(-120px);
       }
 
       75%,
       85% {
-        transform: translateY(-192px);
+        transform: translateY(-144px);
       }
 
       87.5%,
       97.5% {
-        transform: translateY(-224px);
+        transform: translateY(-168px);
       }
 
       100% {
-        transform: translateY(-256px);
+        transform: translateY(-192px);
       }
     }
 
@@ -449,15 +440,14 @@
       position: relative;
     }
 
-    .hero .container {
-      width: 100%;
-    }
+
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.95fr;
-      gap: clamp(32px, 5vw, 64px);
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 80px);
       align-items: center;
+      /* Ensures text and image are vertically centered */
     }
 
     .headline {
@@ -1796,7 +1786,7 @@
         <div class="split">
           <div class="grid-2" style="margin-top:0;">
             <article class="card reveal">
-              <span class="tag">System 1 · €997</span>
+              <span class="tag">System 1</span>
               <h3>Patient Onboarding System</h3>
               <p>Automates the new patient journey from day one.</p>
               <ul class="checklist">
@@ -1813,7 +1803,7 @@
             </article>
 
             <article class="card reveal">
-              <span class="tag">System 2 · €997</span>
+              <span class="tag">System 2</span>
               <h3>Patient Reactivation System</h3>
               <p>Brings back dormant patients who haven't visited in 6+ months.</p>
               <ul class="checklist">
